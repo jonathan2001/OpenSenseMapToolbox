@@ -6,6 +6,7 @@ import numpy
 import json
 from io import StringIO
 from urllib.parse import urljoin
+import string
 
 from .APIressources import APIressources
 from .Box import Box
@@ -53,7 +54,11 @@ class OpenSenseMap(APIressources):
         data_path = './data'
         if len(self.boxes) > 0:
             for box in self.boxes:
-                box_data_path = os.path.join(data_path, box.metadata["name"])
+                # Sanitize the folder name to remove invalid characters
+                sanitized_name = box.metadata["name"]
+                sanitized_name = ''.join(c for c in sanitized_name if c not in string.punctuation)
+                
+                box_data_path = os.path.join(data_path, sanitized_name)
                 os.makedirs(box_data_path, exist_ok=True)
                 if isinstance(box.data, gpd.GeoDataFrame):
                     box.save_csv(box.data, os.path.join(box_data_path, 'data.csv'))
