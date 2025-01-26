@@ -56,4 +56,4 @@ class OpenSenseMap(APIressources):
                 box_data_path = os.path.join(data_path, box.boxId)
                 os.makedirs(box_data_path, exist_ok=True)
                 if isinstance(box.data, gpd.GeoDataFrame):
-                    box.save_csv(box.data, os.path.join(box_data_path, 'data.csv'))
+                    xxxxbox.save_csv(box.data, os.path.join(box_data_path, 'data.csv'))
